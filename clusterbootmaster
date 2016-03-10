@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+from socket import *
+
+endpoint = 'http://example.com/bootstrap.sh'
+
+udp = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)
+udp.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+udp.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
+udp.bind(("0.0.0.0", 8007))
+
+while True:
+    data, address = udp.recvfrom(65507)
+    udp.sendto(endpoint, address);
